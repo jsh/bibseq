@@ -18,3 +18,5 @@ htmlcov/
 requirements*
 # permit checkin of input for pip-compile to create a requirements.txt
 !requirements.in
+# scratch file
+scratch.py
