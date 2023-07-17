@@ -1,0 +1,141 @@
+# Use the README as the prompt, followed by this: 
+# 
+# What is the Python code that implements the solution to this?
+# What are unit tests that go with this to ensure correctness and completeness?
+
+
+To implement the solution, we can iterate through the given list and create subsequences following the rules mentioned in the problem. We'll keep track of the leading element for each subsequence and add elements to the current subsequence as long as they are greater than the leading element. Once we encounter a smaller element, we start a new subsequence with this element as the leading element.
+
+Here's the Python code to implement the solution along with some unit tests using the `unittest` framework to ensure correctness and completeness:
+
+```python
+import unittest
+
+def bibseq(sequence):
+    subsequences = []
+    current_subsequence = []
+    leading_element = float('inf')  # Initialize to positive infinity to handle the first subsequence
+
+    for element in sequence:
+        if element < leading_element:
+            if current_subsequence:
+                subsequences.append(current_subsequence)
+            current_subsequence = [element]
+            leading_element = element
+        else:
+            current_subsequence.append(element)
+
+    # Add the last subsequence after the loop finishes
+    if current_subsequence:
+        subsequences.append(current_subsequence)
+
+    return subsequences
+
+# Unit tests
+class TestBibSeq(unittest.TestCase):
+    def test_case_1(self):
+        sequence = [31, 41, 59, 26, 53, 58, 97, 93, 23, 84, 62, 64, 33]
+        expected_result = [[31, 41, 59], [26, 53, 58, 97, 93], [23, 84, 62, 64, 33]]
+        self.assertEqual(bibseq(sequence), expected_result)
+
+    def test_case_2(self):
+        sequence = [5, 4, 3, 2, 1]
+        expected_result = [[5], [4], [3], [2], [1]]
+        self.assertEqual(bibseq(sequence), expected_result)
+
+    def test_case_3(self):
+        sequence = [10, 20, 30, 40, 50]
+        expected_result = [[10, 20, 30, 40, 50]]
+        self.assertEqual(bibseq(sequence), expected_result)
+
+    def test_case_4(self):
+        sequence = [1, 2, 3, 4, 5]
+        expected_result = [[1, 2, 3, 4, 5]]
+        self.assertEqual(bibseq(sequence), expected_result)
+
+    def test_case_5(self):
+        sequence = [10, 20, 15, 30, 25, 40, 35, 50]
+        expected_result = [[10, 20], [15, 30], [25, 40], [35, 50]]
+        self.assertEqual(bibseq(sequence), expected_result)
+
+    def test_case_6(self):
+        sequence = []
+        expected_result = []
+        self.assertEqual(bibseq(sequence), expected_result)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+In this code, we defined the function `bibseq(sequence)` that takes a list as input and returns a list of subsequences based on the rules specified. We then have several unit tests using the `unittest.TestCase` class to validate the correctness of our implementation for different cases. Each test case includes a specific input list and its corresponding expected output, which are compared using `self.assertEqual()`. If all tests pass without raising any errors, we can be confident that the implementation is correct and complete.
+
+# Now enter the following prompt.
+# 
+# How about pytest instead?
+
+Sure! We can use `pytest`, another popular testing framework, instead of `unittest` to write the unit tests for the `bibseq` function. Here's the updated Python code using `pytest` for testing:
+
+First, make sure you have `pytest` installed. If not, you can install it using `pip`:
+
+```bash
+pip install pytest
+```
+
+Now, let's modify the code to use `pytest` for testing:
+
+```python
+import pytest
+
+def bibseq(sequence):
+    subsequences = []
+    current_subsequence = []
+    leading_element = float('inf')  # Initialize to positive infinity to handle the first subsequence
+
+    for element in sequence:
+        if element < leading_element:
+            if current_subsequence:
+                subsequences.append(current_subsequence)
+            current_subsequence = [element]
+            leading_element = element
+        else:
+            current_subsequence.append(element)
+
+    # Add the last subsequence after the loop finishes
+    if current_subsequence:
+        subsequences.append(current_subsequence)
+
+    return subsequences
+
+# Pytest unit tests
+def test_bibseq():
+    sequence_1 = [31, 41, 59, 26, 53, 58, 97, 93, 23, 84, 62, 64, 33]
+    expected_result_1 = [[31, 41, 59], [26, 53, 58, 97, 93], [23, 84, 62, 64, 33]]
+    assert bibseq(sequence_1) == expected_result_1
+
+    sequence_2 = [5, 4, 3, 2, 1]
+    expected_result_2 = [[5], [4], [3], [2], [1]]
+    assert bibseq(sequence_2) == expected_result_2
+
+    sequence_3 = [10, 20, 30, 40, 50]
+    expected_result_3 = [[10, 20, 30, 40, 50]]
+    assert bibseq(sequence_3) == expected_result_3
+
+    sequence_4 = [1, 2, 3, 4, 5]
+    expected_result_4 = [[1, 2, 3, 4, 5]]
+    assert bibseq(sequence_4) == expected_result_4
+
+    sequence_5 = [10, 20, 15, 30, 25, 40, 35, 50]
+    expected_result_5 = [[10, 20], [15, 30], [25, 40], [35, 50]]
+    assert bibseq(sequence_5) == expected_result_5
+
+    sequence_6 = []
+    expected_result_6 = []
+    assert bibseq(sequence_6) == expected_result_6
+
+if __name__ == "__main__":
+    pytest.main()
+```
+
+In this code, we replaced the `unittest.TestCase` class with a single function named `test_bibseq`. Inside this function, we have multiple test cases using `assert` statements. When running `pytest.main()`, pytest will automatically discover and run these test cases. If any of the `assert` statements fail, pytest will report the failed test case along with details about the failure.
+
+Now you can run the script, and pytest will execute the tests and provide the test results. If all tests pass without any assertion errors, you can be confident that your `bibseq` implementation is correct and complete.
